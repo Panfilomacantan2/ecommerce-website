@@ -46,14 +46,28 @@ const formValidate = (email, password) => {
   }
 };
 
-const loginUser = (user) => {
+const loginUser = (userData) => {
   let users;
   if (localStorage.getItem("user_db") === null) {
     users = [];
   } else {
     users = JSON.parse(localStorage.getItem("user_db"));
   }
-  users.push(user);
-  localStorage.setItem("user_db", JSON.stringify(users));
-  window.location.href = "index.html";
+  const isUser = users.find((user) => {
+    if (user.email === userData.email && user.password === userData.password) {
+      return true;
+    }
+  });
+
+  if (isUser) {
+    alert("Login Successful");
+    window.location.href = "index.html";
+  } else if (isUser === undefined) {
+    //if user is not found
+    alert("User is not found");
+  } else {
+    alert("Login Failed");
+  }
+
+  console.log(isUser);
 };
