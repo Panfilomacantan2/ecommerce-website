@@ -85,12 +85,12 @@ const addToCart = async (itemId) => {
   countCart(); //invoke the function cart count
 };
 
+
 const getAllCategory = async () => {
   const categoryDetails = await axios.get(
     "https://fakestoreapi.com/products/categories"
   );
   const categoryData = await categoryDetails.data;
-  console.log(categoryData);
 
   const categoryContainer = $(".category_container");
   categoryData.forEach((category, index) => {
@@ -105,67 +105,3 @@ const getAllCategory = async () => {
   });
 };
 getAllCategory();
-
-//count the number of products in the cart
-const countCart = () => {
-  let cartContainer;
-  if (localStorage.getItem("cart") === null) {
-    cartContainer = [];
-  } else {
-    cartContainer = JSON.parse(localStorage.getItem("cart"));
-  }
-  const cartCount = cartContainer.length;
-  $(".cart_count").innerHTML = cartCount;
-};
-
-document.addEventListener("DOMContentLoaded", countCart);
-
-//display the cart items
-
-const displayCart = () => {
-  let cartContainer;
-  if (localStorage.getItem("cart") === null) {
-    cartContainer = [];
-  } else {
-    cartContainer = JSON.parse(localStorage.getItem("cart"));
-  }
-  const shoppingCartBody = $(".shopping_cart_body");
-  cartContainer.forEach((cartItem, index) => {
-    const { id, image, category, price, title } = cartItem;
-    shoppingCartBody.innerHTML += `
-         <tr>
-            
-            <td class="img"><img src="${image}" alt="${title}" /></td>
-            <td class="item">${title}</td>
-            <td><input type="number" value="1" class="quantity" onchange="checkValue(this)"></td>
-            <td class="price"><span>$${price}</span></td>
-            <td class="total"><span>$${price}</span></td>
-            <td><button class="remove_btn" onclick="removeCartItem(${index})">Remove</button></td>
-          </tr>
-    `;
-  });
-};
-
-displayCart(); //invoke the function
-
-const removeCartItem = (index) => {
-  let cartContainer;
-  if (localStorage.getItem("cart") === null) {
-    cartContainer = [];
-  } else {
-    cartContainer = JSON.parse(localStorage.getItem("cart"));
-  }
-  cartContainer.splice(index, 1);
-  localStorage.setItem("cart", JSON.stringify(cartContainer));
-  countCart();
-  // displayCart();
-  location.reload();
-};
-
-const checkValue = (input) => {
-  if (input.value < 1) {
-    input.value = 1;
-  }
-
-  console.log(input.value);
-};

@@ -60,6 +60,14 @@ body {
   outline: none;
   background: #735aff;
   color: #f5f5f5;
+  -webkit-transition: background-color 0.3s;
+  transition: background-color 0.3s;
+  border-radius: 3px;
+}
+
+.shopping_cart table .shopping_cart_body .remove_btn:hover {
+  background: #5f46f1;
+  color: #f5f5f5;
 }
 
 .shopping_cart table .shopping_cart_body img {
