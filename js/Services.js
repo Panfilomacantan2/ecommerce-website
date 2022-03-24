@@ -38,15 +38,30 @@ const countCart = () => {
 document.addEventListener("DOMContentLoaded", countCart);
 
 //check the value of the quantity input field and if it is less than 1 then set it to 1
-const checkValue = (input) => {
+const checkValue = (input, index) => {
+  const shoppingCartBody = $(".shopping_cart_body");
   if (input.value < 1) {
-    return (input.value = 1);
+    input.value = 1;
   }
+
+  //get the quantity of the product and calculate the total price
+  let totalPrice =
+    shoppingCartBody.children[index].children[3].innerText.replace("₱", "") *
+    input.value;
+  shoppingCartBody.children[
+    index
+  ].children[4].innerText = `₱${totalPrice.toFixed(2)}`;
+
+  getTotalPrice(); //refresh and get the total price of the cart items
 };
 
 //get the quantity of the product and calculate the total price
-const getTotal = (element, price) => {
-  console.log(element, price);
+const getTotal = (price) => {
+  return price;
+};
+
+const getQuantity = (input) => {
+  return input.value;
 };
 
 //display the cart items
@@ -58,25 +73,36 @@ const displayCart = () => {
   } else {
     cartContainer = JSON.parse(localStorage.getItem("cart"));
   }
-  const shoppingCartBody = $(".shopping_cart_body");
-  cartContainer.forEach((cartItem, index) => {
-    const { id, image, category, price, title } = cartItem;
 
-    shoppingCartBody.innerHTML += `
-           <tr>    
+  if (cartContainer.length === 0) {
+    const shoppingCart = $(".shopping_cart");
+    shoppingCart.innerHTML = `
+        <div class="shopping_cart_empty">
+           <div class="shopping_cart_empty_img">
+                <img src="./styles/empty_cart.png">
+              </div>
+            <h2>Your cart is empty</h2>
+            <p>
+                You have no items in your cart.
+            </p>
+        </div>
+        `;
+  } else {
+    const shoppingCartBody = $(".shopping_cart_body");
+    cartContainer.forEach((cartItem, index) => {
+      const { id, image, category, price, title } = cartItem;
+
+      shoppingCartBody.innerHTML += `
+           <tr >    
               <td class="img"><img src="${image}" alt="${title}" /></td>
               <td class="item">${title}</td>
-              <td><input type="number" value="1" id="quantity" class="quantity" onchange="checkValue(this)"></td>
-              <td class="price"><span>₱${price}</span></td>
-              <td class="total"><span>₱${getTotal(
-                price * Number($('[name="quantity"]'))
-              )}</span></td>
+              <td><input type="number" value="1" id="quantity" class="quantity" onchange="checkValue(this, ${index})"></td>
+              <td><span class="price">₱${price}</span></td>
+              <td><span class="total">₱${getTotal(price)}</span></td>
               <td><button class="remove_btn" onclick="removeCartItem(${index})">Remove</button></td>
-            </tr>
-  
-            
-            `;
-  });
+            </tr> `;
+    });
+  }
 };
 
 displayCart(); //invoke the function
@@ -95,3 +121,20 @@ const removeCartItem = (index) => {
   // displayCart();
   location.reload();
 };
+
+const getTotalPrice = () => {
+  let totalPrice = 0;
+  const shoppingCartBody = $(".shopping_cart_body");
+  const totalHandler = $(".total_handler");
+  for (let i = 0; i < shoppingCartBody.children.length; i++) {
+    totalPrice += Number(
+      shoppingCartBody.children[i].children[4].innerText.replace("₱", "")
+    );
+  }
+
+  totalHandler.innerHTML = ` ₱${totalPrice.toFixed(2)}`;
+
+  console.log(totalPrice);
+};
+
+getTotalPrice();
