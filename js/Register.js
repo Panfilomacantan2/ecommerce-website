@@ -33,6 +33,7 @@ registerBtn.addEventListener("click", (e) => {
       phoneNumber,
       email,
       password,
+      isActive: true,
     };
     registerUser(user);
   }
@@ -99,3 +100,12 @@ const registerUser = (user) => {
   localStorage.setItem("user_db", JSON.stringify(users));
   window.location.href = "login.html";
 };
+
+//check if theres an active user or not
+const currentUser = localStorage.getItem("current_user");
+const userData = localStorage.getItem("user_db");
+
+if (!currentUser && userData) {
+  window.location.href = "login.html";
+}
+

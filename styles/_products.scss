@@ -3,7 +3,6 @@
   width: 100%;
   margin: 0 auto;
   padding: 0 10vw;
-  
 
   .product_header {
     width: 100%;
@@ -38,9 +37,7 @@
       transition: all 0.3s ease-in-out;
       cursor: pointer;
 
-      &:hover {
-        transform: scale(1.01);
-      }
+     
 
       .product_image {
         width: 150px;
@@ -77,13 +74,16 @@
           font-weight: 500;
           margin-bottom: 10px;
         }
-        
+
         p {
           font-size: 0.8rem;
           font-weight: 300;
           margin-bottom: 10px;
-        }
 
+          .product_original_price {
+            text-decoration: line-through;
+          }
+        }
 
         .product_btn {
           width: 100%;
@@ -126,7 +126,7 @@
           display: flex;
           justify-content: center;
           align-items: center;
-       
+
           border-radius: 0 0 10px 10px;
           color: #000;
           font-size: 18px;

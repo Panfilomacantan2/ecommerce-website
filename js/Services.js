@@ -1,3 +1,5 @@
+import { checkUser } from "./session.js";
+
 const $ = (selector) => {
   if (selector) return document.querySelector(selector);
   throw new Error("Selector does not exist");
@@ -133,8 +135,17 @@ const getTotalPrice = () => {
   }
 
   totalHandler.innerHTML = ` ₱${totalPrice.toFixed(2)}`;
-
-  console.log(totalPrice);
 };
 
 getTotalPrice();
+
+
+//check if the user is logged in or not
+checkUser();
+
+//check if theres an active user or not
+const currentUser = localStorage.getItem("current_user");
+
+if (!currentUser) {
+  window.location.href = "login.html";
+}

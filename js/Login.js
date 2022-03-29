@@ -1,3 +1,5 @@
+import { setCurrentUser } from "./currentUser.js";
+
 //custom selector
 const $ = (selector) => {
   if (selector) return document.querySelector(selector);
@@ -62,6 +64,7 @@ const loginUser = (userData) => {
   if (isUser) {
     alert("Login Successful");
     window.location.href = "index.html";
+    setCurrentUser(userData);
   } else if (isUser === undefined) {
     //if user is not found
     alert("User is not found");
@@ -71,3 +74,11 @@ const loginUser = (userData) => {
 
   console.log(isUser);
 };
+
+//check if there is a user if not then redirect to index page
+if (localStorage.getItem("current_user") !== null) {
+  window.location.href = "index.html";
+
+  
+}
+// setCurrentUser();

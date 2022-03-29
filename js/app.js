@@ -63,7 +63,6 @@ const searchProduct = async (productId = 3) => {
 };
 searchProduct();
 
-
 //count the number of products in the cart
 const countCart = () => {
   let cartContainer;
@@ -100,7 +99,6 @@ const addToCart = async (itemId) => {
   countCart(); //invoke the function cart count
 };
 
-
 const getAllCategory = async () => {
   const categoryDetails = await axios.get(
     "https://fakestoreapi.com/products/categories"
@@ -120,3 +118,10 @@ const getAllCategory = async () => {
   });
 };
 getAllCategory();
+
+//check if theres an active user or not
+const currentUser = localStorage.getItem("current_user");
+
+if (!currentUser) {
+  window.location.href = "login.html";
+}
