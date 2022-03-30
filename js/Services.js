@@ -1,4 +1,4 @@
-import { checkUser } from "./session.js";
+// import { checkUser } from "./session.js";
 
 const $ = (selector) => {
   if (selector) return document.querySelector(selector);
@@ -16,7 +16,7 @@ const getAllCategory = async () => {
     categoryContainer.innerHTML += `
                   <div class="category_item">
                       <ul>
-                            <li><a href="#">${category}</a></li>
+                            <li><a href="category.html">${category}</a></li>
                             
                           </ul>
                       </div>
@@ -141,7 +141,7 @@ getTotalPrice();
 
 
 //check if the user is logged in or not
-checkUser();
+// checkUser();
 
 //check if theres an active user or not
 const currentUser = localStorage.getItem("current_user");

@@ -105,7 +105,7 @@ const registerUser = (user) => {
 const currentUser = localStorage.getItem("current_user");
 const userData = localStorage.getItem("user_db");
 
-if (!currentUser && userData) {
+if (!currentUser && !userData) {
   window.location.href = "login.html";
 }
 

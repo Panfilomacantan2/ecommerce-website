@@ -109,14 +109,15 @@ const getAllCategory = async () => {
   categoryData.forEach((category, index) => {
     categoryContainer.innerHTML += `
                 <div class="category_item">
-                    <ul>
-                          <li><a href="#">${category}</a></li>
+                       <ul>
+                          <li><a href="category.html" >${category}</a></li>
                           
                         </ul>
                     </div>
     `;
   });
 };
+
 getAllCategory();
 
 //check if theres an active user or not

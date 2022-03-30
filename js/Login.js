@@ -6,6 +6,10 @@ const $ = (selector) => {
   throw new Error("Selector does not exist");
 };
 
+//get current name and email
+// const activeUsername = localStorage.getItem("user_db");
+
+
 const loginBtn = $(".login_btn");
 
 loginBtn.addEventListener("click", (e) => {
@@ -78,7 +82,9 @@ const loginUser = (userData) => {
 //check if there is a user if not then redirect to index page
 if (localStorage.getItem("current_user") !== null) {
   window.location.href = "index.html";
+}
 
-  
+if (localStorage.getItem("user_db") === null) {
+  window.location.href = "register.html";
 }
 // setCurrentUser();
