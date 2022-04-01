@@ -102,10 +102,10 @@ const registerUser = (user) => {
 };
 
 //check if theres an active user or not
-const currentUser = localStorage.getItem("current_user");
+// const currentUser = localStorage.getItem("current_user");
 const userData = localStorage.getItem("user_db");
 
-if (!currentUser && !userData) {
+if (!currentUser ) {
   window.location.href = "login.html";
 }
 

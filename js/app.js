@@ -4,26 +4,33 @@ const $ = (selector) => {
   throw new Error("Selector does not exist");
 };
 
+let productArray = [];
+
 //fetching the data from the api
 const storeData = async () => {
   const productDetails = await axios.get("https://fakestoreapi.com/products");
   const productData = await productDetails.data;
 
-  productData.forEach(async (product, index) => {
-    const {
-      id,
-      description,
-      image,
-      category,
-      price,
-      rating: { count, rate },
-      title,
-    } = productData[index];
+  productArray = [...productData];
 
-    // console.log(productData[index]);
+  if (productArray.length === 0) {
+    $(".product_container").innerHTML = '<div class="loader"></div>';
+  } else {
+    productData.forEach(async (product, index) => {
+      const {
+        id,
+        description,
+        image,
+        category,
+        price,
+        rating: { count, rate },
+        title,
+      } = productData[index];
 
-    const productContainer = $(".product_container");
-    productContainer.innerHTML += `
+      // console.log(productData[index]);
+
+      const productContainer = $(".product_container");
+      productContainer.innerHTML += `
                     <div class="product_item">
                         <div class="product_image">
                             <img src="${image}" alt="${title}"/>
@@ -42,7 +49,8 @@ const storeData = async () => {
                                  })">Add to Cart</button>
                            </div>
                      </div>`;
-  });
+    });
+  }
 };
 storeData(); //invoke the function
 

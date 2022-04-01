@@ -6,42 +6,47 @@ const $ = (selector) => {
 
 //add to cart
 const addToCart = async (itemId) => {
-    const productDetails = await axios.get(
-      `https://fakestoreapi.com/products/${itemId}`
-    );
-    const productData = await productDetails.data;
-  
-    let cartContainer;
-    if (localStorage.getItem("cart") === null) {
-      cartContainer = [];
-    } else {
-      cartContainer = JSON.parse(localStorage.getItem("cart"));
-    }
-  
-    cartContainer.push(productData);
-    localStorage.setItem("cart", JSON.stringify(cartContainer));
-  
-    console.log(productData);
-    console.log(cartContainer);
-  
-    countCart(); //invoke the function cart count
-  };
+  const productDetails = await axios.get(
+    `https://fakestoreapi.com/products/${itemId}`
+  );
+  const productData = await productDetails.data;
+
+  let cartContainer;
+  if (localStorage.getItem("cart") === null) {
+    cartContainer = [];
+  } else {
+    cartContainer = JSON.parse(localStorage.getItem("cart"));
+  }
+
+  cartContainer.push(productData);
+  localStorage.setItem("cart", JSON.stringify(cartContainer));
+
+  console.log(productData);
+  console.log(cartContainer);
+
+  countCart(); //invoke the function cart count
+};
 
 //count the number of items in the cart
 const countCart = () => {
-    let cartContainer;
-    if (localStorage.getItem("cart") === null) {
-      cartContainer = [];
-    } else {
-      cartContainer = JSON.parse(localStorage.getItem("cart"));
-    }
-    const cartCount = cartContainer.length;
-    $(".cart_count").innerHTML = cartCount;
-  };
-  
-  document.addEventListener("DOMContentLoaded", countCart);
+  let cartContainer;
+  if (localStorage.getItem("cart") === null) {
+    cartContainer = [];
+  } else {
+    cartContainer = JSON.parse(localStorage.getItem("cart"));
+  }
+  const cartCount = cartContainer.length;
+  $(".cart_count").innerHTML = cartCount;
+};
 
-let categoriesList = []
+document.addEventListener("DOMContentLoaded", countCart);
+
+let categoriesList = [];
+//loader html code
+categoriesList.length === 0
+  ? ($(".product_category_container").innerHTML = `<div class="loader"></div>`)
+  : ($(".product_category_container").innerHTML = ``);
+
 const fetchCurrentCategory = async () => {
   const container = $(".product_category_container");
   let setFirstCategory = "women's clothing";
@@ -50,9 +55,10 @@ const fetchCurrentCategory = async () => {
   );
 
   const categories = await products.data;
+  let categoryHolder = "";
 
   categoriesList = [...categories];
-  let categoryHolder = "";
+
   categoriesList.forEach((item, index) => {
     const {
       id,
@@ -91,8 +97,6 @@ const fetchCurrentCategory = async () => {
 };
 fetchCurrentCategory();
 
-console.log(categoriesList);
-
 const getAllCategory = async () => {
   const categoryDetails = await axios.get(
     "https://fakestoreapi.com/products/categories"
@@ -122,7 +126,7 @@ const setCategory = async (category) => {
 
   const categories = await products.data;
   categoriesList = [...categories];
-  console.log(categories);
+  console.log("click");
 
   categoriesList.forEach((item, index) => {
     const {
@@ -159,8 +163,13 @@ const setCategory = async (category) => {
   });
 
   container.innerHTML = categoryHolder;
-  
 };
+console.log(categoriesList);
 
+//check if theres an active user or not
+const currentUser = localStorage.getItem("current_user");
+
+if (!currentUser) {
+  window.location.href = "login.html";
+}
 getAllCategory();
-
