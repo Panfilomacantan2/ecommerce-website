@@ -3,34 +3,36 @@ const $ = (selector) => {
   if (selector) return document.querySelector(selector);
   throw new Error("Selector does not exist");
 };
-
 let productArray = [];
+const productContainer = $(".product_container");
 
-//fetching the data from the api
-const storeData = async () => {
+const getProductData = async (category) => {
   const productDetails = await axios.get("https://fakestoreapi.com/products");
   const productData = await productDetails.data;
-
   productArray = [...productData];
+  storeData(productData);
 
-  if (productArray.length === 0) {
-    $(".product_container").innerHTML = '<div class="loader"></div>';
-  } else {
-    productData.forEach(async (product, index) => {
-      const {
-        id,
-        description,
-        image,
-        category,
-        price,
-        rating: { count, rate },
-        title,
-      } = productData[index];
+  
+};
 
-      // console.log(productData[index]);
 
-      const productContainer = $(".product_container");
-      productContainer.innerHTML += `
+
+//fetching the data from the api
+getProductData();
+const storeData = async (productData) => {
+  console.log(productArray);
+  productData.forEach(async (product, index) => {
+    const {
+      id,
+      description,
+      image,
+      category,
+      price,
+      rating: { count, rate },
+      title,
+    } = productData[index];
+
+    productContainer.innerHTML += `
                     <div class="product_item">
                         <div class="product_image">
                             <img src="${image}" alt="${title}"/>
@@ -49,10 +51,8 @@ const storeData = async () => {
                                  })">Add to Cart</button>
                            </div>
                      </div>`;
-    });
-  }
+  });
 };
-storeData(); //invoke the function
 
 const searchProduct = async (productId = 3) => {
   const productDetails = await axios.get(

@@ -128,17 +128,27 @@ const getTotalPrice = () => {
   let totalPrice = 0;
   const shoppingCartBody = $(".shopping_cart_body");
   const totalHandler = $(".total_handler");
-  for (let i = 0; i < shoppingCartBody.children.length; i++) {
-    totalPrice += Number(
-      shoppingCartBody.children[i].children[4].innerText.replace("₱", "")
-    );
+
+  const cart = JSON.parse(localStorage.getItem("cart"));
+
+  if (cart.length === 0) {
+    totalHandler.innerHTML = `
+        <div class="total_handler_empty">
+            <h2>Your cart is empty</h2>
+            <p>
+                You have no items in your cart.
+            </p>
+            `;
+  } else {
+    for (let i = 0; i < shoppingCartBody.children.length; i++) {
+      totalPrice += Number(
+        shoppingCartBody.children[i].children[4].innerText.replace("₱", "")
+      );
+    }
+
+    totalHandler.innerHTML = ` ₱${totalPrice.toFixed(2)}`;
   }
-
-  totalHandler.innerHTML = ` ₱${totalPrice.toFixed(2)}`;
 };
-
-getTotalPrice();
-
 
 //check if the user is logged in or not
 // checkUser();
